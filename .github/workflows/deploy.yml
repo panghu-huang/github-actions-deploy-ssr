@@ -4,7 +4,7 @@ on:
     branches:
       - master
 jobs:
-  Build-and-deploy
+  Build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Build
