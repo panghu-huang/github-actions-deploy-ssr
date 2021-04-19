@@ -7,6 +7,14 @@ jobs:
   Build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Clone repository
+        run: |
+          REPO_NAME="${{ github.repository }}"
+          ARRAY=(${REPO_NAME//\// })
+          DIR_NAME=${ARRAY[1]}
+          cd $DIR_NAME
+          pwd
       - name: Build
-        run: echo "build"
+        run: |
+          pwd
       - run: echo "deploy"
