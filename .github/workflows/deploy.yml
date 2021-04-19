@@ -9,6 +9,7 @@ jobs:
     steps:
       - name: Clone repository
         run: |
+          git clone https://github.com/${{ github.repository }}
           REPO_NAME="${{ github.repository }}"
           ARRAY=(${REPO_NAME//\// })
           DIR_NAME=${ARRAY[1]}
