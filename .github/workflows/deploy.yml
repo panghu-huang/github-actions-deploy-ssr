@@ -9,13 +9,20 @@ jobs:
     steps:
       - name: Clone repository
         run: |
-          git clone https://github.com/${{ github.repository }}
-          REPO_NAME="${{ github.repository }}"
-          ARRAY=(${REPO_NAME//\// })
-          DIR_NAME=${ARRAY[1]}
-          cd $DIR_NAME
-          pwd
-      - name: Build
+          git clone https://github.com/${{ github.repository }} .
+      - name: Check out branch
         run: |
-          pwd
+          GITHUB_REF="${{ github.ref }}"
+          ARRAY=(${GITHUB_REF//\// })
+          BRANCH_NAME=${ARRAY[2]}
+          CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          if [ $BRANCH_NAME != $CURRENT_BRANCH ]; then
+            echo "Start to fetch origin/$BRANCH_NAME"
+            git fetch origin $BRANCH_NAME
+            git checkout $BRANCH_NAME
+          else
+            echo "Current branch is $CURRENT_BRANCH."
+          fi
+      - name: Build
+        run: echo $(git rev-parse --abbrev-ref HEAD)
       - run: echo "deploy"
