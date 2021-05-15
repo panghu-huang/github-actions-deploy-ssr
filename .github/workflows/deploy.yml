@@ -44,7 +44,7 @@ jobs:
           chmod 600 $SSHPATH/id_rsa
           ssh-keygen -y -t rsa -f $SSHPATH/id_rsa
       - name: Update server
-      	run: |
+        run: |
           echo "
             echo \"docker-compose build ...\" >> /home/github-action-build.log
           " | ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}
