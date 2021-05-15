@@ -24,5 +24,7 @@ jobs:
             echo "Current branch is $CURRENT_BRANCH."
           fi
       - name: Build
-        run: echo $(git rev-parse --abbrev-ref HEAD)
+        run: |
+          echo $(git rev-parse --abbrev-ref HEAD)
+          echo "Build"
       - run: echo "deploy"
