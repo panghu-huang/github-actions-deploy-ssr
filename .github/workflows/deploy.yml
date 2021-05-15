@@ -43,7 +43,7 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" >> $SSHPATH/id_rsa
           chmod 600 $SSHPATH/id_rsa
           ssh-keygen -y -t rsa -f $SSHPATH/id_rsa
-     - name: Update server
+      - name: Update server
       	run: |
           echo "
             echo "docker-compose build ..." >> /home/github-action-build.log
