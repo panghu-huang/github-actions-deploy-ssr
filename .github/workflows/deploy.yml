@@ -27,4 +27,23 @@ jobs:
         run: |
           echo $(git rev-parse --abbrev-ref HEAD)
           echo "Build"
-      - run: echo "deploy"
+      - name: Setup ssh
+        run: |
+          SSHPATH="$HOME/.ssh"
+          if [ ! -d "$SSHPATH" ]
+          then
+            mkdir $SSHPATH
+          fi
+          if [ ! -f "$SSHPATH/known_hosts" ]
+          then
+            touch $SSHPATH/known_hosts
+          fi
+          chmod 700 $SSHPATH
+          chmod 600 $SSHPATH/known_hosts
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" >> $SSHPATH/id_rsa
+          chmod 600 $SSHPATH/id_rsa
+          ssh-keygen -y -t rsa -f $SSHPATH/id_rsa
+          
+          echo "
+            echo "test" >> /home/test
+          " | ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}
